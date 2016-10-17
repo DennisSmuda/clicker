@@ -13,8 +13,9 @@ export default class GameState extends Phaser.State {
 
     this.gameBackground = this.add.sprite(0, 0, 'game-background');
 
-    this.cookie = new Cookie(this.game, this.centerPos.x, 120, this.gamestate);
+    this.cookie = new Cookie(this.game, this.centerPos.x, 160, this.gamestate);
     this.cookieCounter = new CookieCounter(this.game, this.gamestate);
+    this.group1 = this.game.add.group();
 
     // let text = new RainbowText(this.game, 0, center.y/2, "- phaser -\nwith a sprinkle of\nES6 dust!");
   }

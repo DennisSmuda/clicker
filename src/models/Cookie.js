@@ -11,17 +11,27 @@ export default class Cookie extends Phaser.Sprite {
     this.game.stage.addChild(this);
 
     this.inputEnabled = true;
-    this.events.onInputDown.add(() => { this.onClick(); })
+    this.events.onInputDown.add((pointer) => { this.onClick(pointer); })
     this.events.onInputOver.add(() => { this.onOver(); })
     this.events.onInputOut.add(() => { this.onOut(); })
 
+    this.emitter = this.game.add.emitter(0, 0, 10);
+    this.emitter.makeParticles('cookie-particle');
+    this.emitter.gravity = 0;
+    this.emitter.particleBringToTop = true;
+    this.emitter.x = x;
+    this.emitter.y = y;
+    this.emitter.minParticleSpeed.set(500, 0);
+    this.emitter.maxParticleSpeed.set(500, 0);
   }
 
-  onClick() {
+  onClick(pointer) {
     console.log('Clicked');
     this.gamestate.timesClicked++;
     this.gamestate.cookies++;
     this.scale.setTo(1.05);
+    this.emitter.start(true, 1200, null, 1);
+    this.emitter.setAlpha(1, 0, 1100);
   }
 
   onOver() {
@@ -35,6 +45,6 @@ export default class Cookie extends Phaser.Sprite {
   }
 
   update() {
-    this.angle += 1;
+    this.angle += 0.4;
   }
 }

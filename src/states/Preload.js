@@ -13,6 +13,8 @@ export default class Preload extends Phaser.State {
     // this.load.image('game-background', 'assets/images/game-background.png');
     this.load.image('game-background', './images/background.png');
     this.load.image('cookie', './images/cookie.png');
+    this.load.image('oven', './images/oven.png');
+
     this.load.image('cookie-particle', './images/cookie-particle.png');
   }
 

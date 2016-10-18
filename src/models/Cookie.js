@@ -30,8 +30,8 @@ export default class Cookie extends Phaser.Sprite {
     this.gamestate.timesClicked++;
     this.gamestate.cookies++;
     this.scale.setTo(1.05);
-    this.emitter.start(true, 1200, null, 1);
-    this.emitter.setAlpha(1, 0, 1100);
+    this.emitter.setAlpha(0.7, 0, 200);
+    this.emitter.start(true, 800, null, 1);
   }
 
   onOver() {

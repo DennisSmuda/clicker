@@ -1,3 +1,5 @@
+import VisualTimer from '../util/VisualTimer';
+
 
 export default class Oven extends Phaser.Sprite {
   constructor(game, gamestate) {
@@ -9,7 +11,7 @@ export default class Oven extends Phaser.Sprite {
     this.gamestate = gamestate;
     this.formula = formula;
 
-    this.alpha = 0.5;
+    this.alpha = 0;
     this.active = false;
     this.productionReady = false;
 
@@ -34,46 +36,75 @@ export default class Oven extends Phaser.Sprite {
 
 
     this.setupText();
+    this.setupIndicator();
 
   }
 
   onClick() {
     if (this.active) {
-      if (this.productionStart == null) { this.productionStart = this.game.time.now; }
+      // Initialize first startup
+      if (this.productionStart == null) { this.productionStart = this.game.time.now; this.indicator.start(); }
+
       this.gamestate.ovens++;
       this.gamestate.cookies -= this.formula.cost;
       this.gamestate.productionRate += this.formula.productionRate;
+      this.formula.cost += 2;
+      let newCost = this.formula.cost * (Math.pow(1.07, this.gamestate.ovens));
+      this.formula.cost = newCost.toFixed(2);
     }
   }
 
+
+
+
   update() {
     if (this.gamestate.cookies >= this.formula.cost) {
-      this.active = true;
-      this.alpha = 1;
+      this.activate(true);
     } else {
-      this.active = false;
-      this.alpha = 0.5;
+      this.activate(false);
     }
 
     this.counter.setText(`x ${this.gamestate.ovens}`);
+    this.cost.setText(`${this.formula.cost} C`);
 
     if (this.productionStart) {
       if ((this.game.time.now - this.productionStart) >= this.formula.speed) {
         this.gamestate.cookies += this.gamestate.ovens;
         this.productionStart = this.game.time.now;
       }
-
     }
 
   }
 
   setupText() {
-    this.counter = this.game.add.text(this.xOrigin + 120, this.y, `x ${this.gamestate.ovens}`, {
+    this.counter = this.game.add.text(this.xOrigin + 150, this.y, `x ${this.gamestate.ovens}`, {
       font: '19px Lobster',
       fill: '#FFFFFF',
       align: 'right'
     });
+    this.cost = this.game.add.text(this.xOrigin + 150, this.y - 20, `${this.formula.cost}`, {
+      font: '19px Lobster',
+      fill: '#d5404b',
+      align: 'right'
+    });
 
+    this.counter.anchor.setTo(1, 0);
+    this.cost.anchor.setTo(1, 0);
+    this.cost.alpha = 0.5;
+  }
+
+  setupIndicator() {
+    this.indicator = new VisualTimer({
+      game: this.game,
+      x: this.xOrigin,
+      y: this.yOrigin+50,
+      seconds: 2,
+      type: 'up',
+      onComplete: function() {
+        console.log('Timer Complete');
+        this.start();
+      }
+    });
   }
 
   onOver() {
@@ -90,6 +121,20 @@ export default class Oven extends Phaser.Sprite {
     }
   }
 
+  activate(status) {
+    if (status) {
+      this.active = true;
+      this.alpha = 1;
+      this.cost.fill = '#FFFFFF';
+      this.cost.alpha = 1;
+    } else {
+      this.active = false;
+      this.alpha = 0.5;
+      this.cost.fill = '#D5404B';
+      this.cost.alpha = 0.5;
+    }
+
+  }
 }
 
 

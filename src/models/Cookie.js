@@ -23,6 +23,7 @@ export default class Cookie extends Phaser.Sprite {
     this.emitter.y = y;
     this.emitter.minParticleSpeed.set(500, 0);
     this.emitter.maxParticleSpeed.set(500, 0);
+
   }
 
   onClick(pointer) {

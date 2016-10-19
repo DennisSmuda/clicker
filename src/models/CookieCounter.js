@@ -20,6 +20,6 @@ export default class CookieCounter {
 
 
   update() {
-    this.cookieCounter.setText(`Cookies\n ${this.gamestate.cookies}`);
+    this.cookieCounter.setText(`Cookies\n ${this.gamestate.cookies.toFixed(2)}`);
   }
 }

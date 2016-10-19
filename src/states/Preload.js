@@ -15,6 +15,9 @@ export default class Preload extends Phaser.State {
     this.load.image('cookie', './images/cookie.png');
     this.load.image('oven', './images/oven.png');
 
+    // Timer Spritesheet
+    this.load.spritesheet('timer', './images/timer.png', 150, 20);
+
     this.load.image('cookie-particle', './images/cookie-particle.png');
   }
 

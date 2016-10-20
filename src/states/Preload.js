@@ -6,6 +6,9 @@ export default class Preload extends Phaser.State {
     this.background = null;
     this.preloadBar = null;
     this.ready      = false;
+
+    
+
   }
 
   preload() {

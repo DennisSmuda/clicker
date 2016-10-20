@@ -17,5 +17,7 @@ run with:
 
 $$Price = BaseCost * Multiplier^{amountOwned}$$
 
+__Multiplier between 1.07 | 1.15__ for best Results
+
 
 ### Gameplay
